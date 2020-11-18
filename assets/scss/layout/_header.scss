@@ -1,0 +1,126 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+  &__container {
+    width: 93.33333%;
+    margin: 0 auto;
+    position: relative;
+    &__select-language {
+      position: absolute;
+      right: 0;
+      bottom: -40px;
+      background-color: rgba(224, 224, 224, 0.9);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: space-around;
+      width: 120px;
+      height: 80px;
+      &__item {
+        span {
+          font-weight: 500;
+          cursor: pointer;
+        }
+        img {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+    &__contact {
+      display: flex;
+      justify-content: space-between;
+      &__map {
+        img {
+          cursor: pointer;
+        }
+      }
+      &__phone {
+        img {
+          cursor: pointer;
+        }
+      }
+      &__language {
+        img {
+          cursor: pointer;
+          width: 20px;
+          width: 20px;
+        }
+      }
+    }
+    &__body {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      &__list {
+        width: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        &__item {
+          a {
+            text-transform: uppercase;
+            font-weight: 400;
+            color: white;
+          }
+          .active {
+            color: #d3a657;
+            border-bottom: 1px solid #d3a657;
+          }
+        }
+      }
+      &__search {
+        width: 20%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
+      &__card {
+        margin-left: 20px;
+      }
+    }
+  }
+}
+.header-scroll-show {
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.5);
+  background-color: black;
+  animation: showScrollHeader 0.5s linear;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 30;
+}
+.header-scroll-hide {
+  background-color: rgba(0, 0, 0, 0);
+  animation: hideScrollHeader 0.5s linear;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 30;
+}
+
+@keyframes showScrollHeader {
+  0% {
+    background-color: rgba(0, 0, 0, 0);
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0);
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 1);
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.5);
+  }
+}
+@keyframes hideScrollHeader {
+  0% {
+    background-color: rgba(0, 0, 0, 1);
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.5);
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 0);
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0);
+  }
+}

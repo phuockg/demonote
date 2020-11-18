@@ -1,0 +1,11 @@
+.home {
+  margin-top: 10px;
+  &__container {
+    background-color: #f9f9f9;
+    padding: 10px;
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+}

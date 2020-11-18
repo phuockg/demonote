@@ -1,0 +1,63 @@
+.profile {
+  width: 30%;
+
+  &__container {
+    height: 100%;
+    border: 1px solid black;
+    padding: 15px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba($color: #000000, $alpha: 0.2);
+    &__infor {
+      display: flex;
+      align-items: center;
+      box-shadow: 0 0 5px rgba($color: #000000, $alpha: 0.2);
+      box-sizing: border-box;
+      border-radius: 5px;
+      padding: 5px;
+      &__avatar {
+        width: 50px;
+        height: 50px;
+      }
+      &__content {
+        display: flex;
+        flex-direction: column;
+        margin-left: 20px;
+        &__feature {
+          display: flex;
+          align-items: center;
+          &__follow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            img {
+              width: 15px;
+              height: 15px;
+              margin-right: 10px;
+            }
+          }
+          &__space {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background-color: black;
+            margin: 0 15px;
+          }
+          &__like {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            img {
+              width: 15px;
+              height: 15px;
+              margin-right: 10px;
+            }
+          }
+        }
+      }
+    }
+    &__introduce {
+      margin-top: 20px;
+    }
+  }
+}
