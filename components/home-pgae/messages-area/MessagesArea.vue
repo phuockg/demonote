@@ -2,19 +2,58 @@
   <div class="messages-chat">
       <div class="messages-chat__container">
             <div class="messages-chat__container__infor">
-                <p>
-                    最初は「フードでそんなに変わるかなぁ」なんて半信半疑でしたが、
-                     本当に元気の良さが違う！ぐったり寝ている姿を見なくなりました
-                    。ここまで違うならもっと早くから食べさせてあげればよかった〜
-                </p>
+                <h3 class="messages-chat__container__infor__title">
+                   Top gift
+                </h3>
+                <ul class="messages-chat__container__infor__list">
+                    <li class="messages-chat__container__infor__list__item">
+                        <img class="messages-chat__container__infor__list__item__avatar" :src="imgUser" alt="">
+                        <p class="messages-chat__container__infor__list__item__name">NVA</p>
+                        <div class="messages-chat__container__infor__list__item__price">
+                            <p>1200</p>
+                            <img class="messages-chat__container__infor__list__item__price__unit" :src="imgDiamond" alt="">
+                        </div>
+                        
+                    </li>
+                    <li class="messages-chat__container__infor__list__item">
+                        <img class="messages-chat__container__infor__list__item__avatar" :src="imgUser" alt="">
+                        <p class="messages-chat__container__infor__list__item__name">NVA</p>
+                       <div class="messages-chat__container__infor__list__item__price">
+                            <p>500</p>
+                            <img class="messages-chat__container__infor__list__item__price__unit" :src="imgDiamond" alt="">
+                        </div>
+                    </li>
+                    <li class="messages-chat__container__infor__list__item">
+                        <img class="messages-chat__container__infor__list__item__avatar" :src="imgUser" alt="">
+                        <p class="messages-chat__container__infor__list__item__name">NVA</p>
+                        <div class="messages-chat__container__infor__list__item__price">
+                            <p>100</p>
+                            <img class="messages-chat__container__infor__list__item__price__unit" :src="imgDiamond" alt="">
+                        </div>
+                    </li>
+
+                </ul>
             </div>
-            <ul class="messages-chat__container__frames-chat">
+            <ul ref="frames" class="messages-chat__container__frames-chat">
                 <li v-for="(item, index) in commnetUsers" :key="index" class="messages-chat__container__frames-chat__inbox-item">
-                    <img class="messages-chat__container__frames-chat__inbox-item__avatar" :src="item.avatar" alt="">
-                    <div class="messages-chat__container__frames-chat__inbox-item__content">
-                      {{item.isShowGift ? item.contentGift:item.content}}
+                    
+                    <div class="messages-chat__container__frames-chat__inbox-item__avatars">
+                        <div class="messages-chat__container__frames-chat__inbox-item__avatars__avatar">
+                             <img class="messages-chat__container__frames-chat__inbox-item__avatars__avatar__img" :src="item.avatar" alt="">
+                             <p>You</p>
+                        </div>
+                        <div class="messages-chat__container__frames-chat__inbox-item__avatars__content">
+                            {{item.isShowGift ? item.contentGift:item.content}}
+                        </div>
                     </div>
-                    <img class="messages-chat__container__frames-chat__inbox-item__gift"  v-if="item.isShowGift" :src="item.gift" alt="">
+                    <div class="messages-chat__container__frames-chat__inbox-item__gift">
+                        <img class="messages-chat__container__frames-chat__inbox-item__gift__img"  v-if="item.isShowGift" :src="item.gift" alt="">
+                        <div  v-if="item.isShowGift" class="messages-chat__container__frames-chat__inbox-item__gift__price">
+                             <p>{{item.price}}</p>
+                             <img class="messages-chat__container__frames-chat__inbox-item__gift__price__unit" :src="imgDiamond" alt="">
+                        </div>  
+                    </div>
+                    
                 </li>
             </ul>
             <div class="messages-chat__container__content-message">
@@ -22,15 +61,15 @@
                     <button @click="showIcon"><img :src="imgGift" alt=""></button>
                 </div>
                 <div class="messages-chat__container__content-message__input">
-                    <!-- <input v-on:keyup="enterText" type="text" :value="commnetUser.content"> -->
-                    <span contenteditable="true"> nguyen quang phuoc</span>
+                    <input v-on:keyup="enterText" type="text" :value="commnetUser.content">
+                    <!-- <span contenteditable="true"> nguyen quang phuoc</span> -->
                     <div class="messages-chat__container__content-message__input__btn-send">
                         <button @click="sendCommnent">send</button>
                     </div>
                 </div>
             </div>
             <ul v-if="isShowIcon"  class="messages-chat__container__icon">
-                <li v-for="(item, index) in dataGift"  :key="index" @click="()=>addIcon(item.img)" class="messages-chat__container__icon__item">
+                <li v-for="(item, index) in dataGift"  :key="index" @click="()=>addIcon(item)" class="messages-chat__container__icon__item">
                     <img class="messages-chat__container__icon__item__gift" :src="item.img" alt="">
                     <div class="messages-chat__container__icon__item__infor"> 
                         <p class="messages-chat__container__icon__item__infor__price">{{item.price}}</p>
@@ -67,17 +106,19 @@ let commnetUsers = [
     {
         name:"A1",
         content:"hello",
-        contentGift:"xin chao! `Name` vừa tặng bạn món quà ",
+        contentGift:"xin chao! `You` vừa tặng bạn món quà ",
         avatar:imgUser,
-        isShowGift:false
+        isShowGift:false,
+        price:"100"
         
     },
     {
         name:"A2",
         content:"Xin chào",
-        contentGift:"xin chao! `Name` vừa tặng bạn món quà ",
+        contentGift:"xin chao! `You` vừa tặng bạn món quà ",
         avatar:imgUser,
-        isShowGift:false
+        isShowGift:false,
+        price:"100"
     }
     ]
 let dataGift = [{
@@ -114,7 +155,7 @@ let dataGift = [{
     
 ]
 export default {
-    name:"messages chat",
+    name:"messageschat",
     data:()=>{
         return{
             imgUser,
@@ -137,10 +178,11 @@ export default {
             commnetUser:{
                 name:"A2",
                 content:"",
-                contentGift:"xin chao! `Name` vừa tặng bạn món quà ",
+                contentGift:"xin chao! You vừa tặng bạn món quà ",
                 avatar:imgUser,
                 gift:imgSmiling,
-                isShowGift:false
+                isShowGift:false,
+                price:"100"
             },
             isShowIcon:false
         }
@@ -150,7 +192,7 @@ export default {
             this.commnetUser={...this.commnetUser,content:e.target.value,isShowGift:false}
         },
         addIcon(item){
-            this.commnetUser={...this.commnetUser, gift:item, isShowGift:true}
+            this.commnetUser={...this.commnetUser, gift:item.img,price:item.price, isShowGift:true}
              this.commnetUsers=[...this.commnetUsers,this.commnetUser]
              this.isShowIcon=false
         },
