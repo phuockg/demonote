@@ -173,13 +173,13 @@ let dataGift = [{
         price:1,
     },{
         img:imgRose,
-        price:5,
+        price:2,
     },{
         img:imgCola,
-        price:10,
+        price:5,
     },{
         img:imgDrinkWater,
-        price:15,
+        price:10,
     },{
         img:imgBirthdayCake,
         price:20,
@@ -191,7 +191,7 @@ let dataGift = [{
         price:200,
     },{
         img:imgCar,
-        price:400,
+        price:500,
     },{
         img:imgBus,
         price:600,
@@ -255,6 +255,10 @@ export default {
             isShowIcon:false
         }
     },
+    updated(){
+         this.$refs.frameLength.scrollTop=  Number(this.$refs.frames[this.$refs.frames.length -1].offsetTop) + Number(this.$refs.frames[this.$refs.frames.length -1].offsetHeight)
+        
+    },
     methods:{
         enterText(e){
             this.commnetUser={...this.commnetUser,content:e.target.value,isShowGift:false} 
@@ -262,19 +266,14 @@ export default {
         addIcon(item){
             this.commnetUser={...this.commnetUser, gift:item.img,price:item.price, isShowGift:true}
              this.commnetUsers=[...this.commnetUsers,this.commnetUser]
-           
-             this.$refs.frameLength.scrollTop=    Number(this.$refs.frames[this.$refs.frames.length - 1].offsetTop) + Number(this.$refs.frames[this.$refs.frames.length - 1].offsetHeight)
-         
              this.isShowIcon=false
         },
         sendCommnent(){
             this.commnetUser={...this.commnetUser,isShowGift:false}
             this.commnetUsers=[...this.commnetUsers,this.commnetUser]
             this.commnetUser={...this.commnetUser,content:"",isShowGift:false}
-            this.$refs.frameLength.scrollTop=    Number(this.$refs.frames[this.$refs.frames.length - 1].offsetTop) + Number(this.$refs.frames[this.$refs.frames.length - 1].offsetHeight)
             this.isShowIcon=false
         },
-        
         showIcon(){
             this.isShowIcon=!this.isShowIcon
         },
@@ -284,6 +283,7 @@ export default {
     }
 }
 </script>
+
 
 <style lang="scss" scoped>
 @import "~/assets/scss/components/home/messages-area.scss";
