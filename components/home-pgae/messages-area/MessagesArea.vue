@@ -62,9 +62,9 @@
                     <button @click="showIcon"><img :src="imgGift" alt=""></button>
                 </div>
                 <div class="messages-chat__container__content-message__input">
-                    <!-- <input v-on:keyup="enterText" type="text" :value="commnetUser.content"> -->
-                    <textarea v-on:keyup="enterText" type="text" :value="commnetUser.content" rows="4" cols="50">
-                    </textarea>
+                    <input v-on:keyup="enterText" type="text" :value="commnetUser.content">
+                    <!-- <textarea v-on:keyup="enterText" type="text" :value="commnetUser.content" rows="4" cols="50">
+                    </textarea> -->
                     <!-- <span class="messages-chat__container__content-message__input__span" v-on:keyup="enterText" contenteditable="true"> {{commnetUser.content}}</span> -->
                     <div class="messages-chat__container__content-message__input__btn-send">
                         <button @click="sendCommnent">send</button>
@@ -113,8 +113,6 @@
                     
                 </div>
             </div>
-          
-            
       </div>
   </div>
 </template>
