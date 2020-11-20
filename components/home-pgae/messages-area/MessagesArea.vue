@@ -62,7 +62,7 @@
                     <button @click="showIcon"><img :src="imgGift" alt=""></button>
                 </div>
                 <div class="messages-chat__container__content-message__input">
-                    <input v-on:keyup="enterText" type="text" :value="commnetUser.content">
+                    <input  @keyup.enter="sendCommnent" @keyup="enterText" type="text" :value="commnetUser.content">
                     <!-- <textarea v-on:keyup="enterText" type="text" :value="commnetUser.content" rows="4" cols="50">
                     </textarea> -->
                     <!-- <span class="messages-chat__container__content-message__input__span" v-on:keyup="enterText" contenteditable="true"> {{commnetUser.content}}</span> -->
@@ -255,11 +255,17 @@ export default {
     },
     updated(){
          this.$refs.frameLength.scrollTop=  Number(this.$refs.frames[this.$refs.frames.length -1].offsetTop) + Number(this.$refs.frames[this.$refs.frames.length -1].offsetHeight)
-        
+        //  this.commnetUser={...this.commnetUser,content:"",isShowGift:false}
     },
     methods:{
+        sendText(){
+            console.log("object")
+        },
+
         enterText(e){
+            if(e.keyCode != "13")
             this.commnetUser={...this.commnetUser,content:e.target.value,isShowGift:false} 
+            
         },
         addIcon(item){
             this.commnetUser={...this.commnetUser, gift:item.img,price:item.price, isShowGift:true}
@@ -267,10 +273,11 @@ export default {
              this.isShowIcon=false
         },
         sendCommnent(){
-            this.commnetUser={...this.commnetUser,isShowGift:false}
+            this.commnetUser={...this.commnetUser, isShowGift:false}
             this.commnetUsers=[...this.commnetUsers,this.commnetUser]
             this.commnetUser={...this.commnetUser,content:"",isShowGift:false}
             this.isShowIcon=false
+            console.log("object")
         },
         showIcon(){
             this.isShowIcon=!this.isShowIcon
