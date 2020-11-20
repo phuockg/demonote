@@ -79,7 +79,7 @@
                     </div>
                     <div class="messages-chat__container__icon__wrap__arrow-show">   
                     </div>
-                    <div class="messages-chat__container__icon__wrap__list">
+                    <div v-if="!isShowBuyGitf" class="messages-chat__container__icon__wrap__list">
                         <ul  class="messages-chat__container__icon__wrap__list__type">
                             <li v-for="(item, index) in dataGift" v-if="item.price > 0 && item.price <= 20" :key="index" @click="()=>addIcon(item)" class="messages-chat__container__icon__wrap__list__type__item">
                                 <img  class="messages-chat__container__icon__wrap__list__type__item__gift"  :src="item.img" alt="">
@@ -110,6 +110,27 @@
                             </li>
                         </ul>
                     </div>
+                    <div v-if="isShowBuyGitf" class="messages-chat__container__icon__wrap__buy-diamond">
+                        <h1>Buy Diamond</h1>
+                        <ul class="messages-chat__container__icon__wrap__buy-diamond__list">
+                            <li v-for="(item,index) in dataDiamond" :key="index" class="messages-chat__container__icon__wrap__buy-diamond__list__item">
+                                <div class="messages-chat__container__icon__wrap__buy-diamond__list__item__number">
+                                    <img :src="imgDiamond" alt="">
+                                    <span>{{item.number}}</span>
+                                </div>
+                                <div class="messages-chat__container__icon__wrap__buy-diamond__list__item__price">
+                                    <span>{{item.price}}VND</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="messages-chat__container__icon__wrap__number-diamond">
+                        <div class="messages-chat__container__icon__wrap__number-diamond__current" >
+                            <img :src="imgDiamond" alt="">
+                            <span>0</span>
+                            <img @click="buyDiamond" :src="imgPlus" alt="">
+                        </div>
+                    </div>
                     
                 </div>
             </div>
@@ -125,6 +146,7 @@ import imgGift from "../../../assets/images/gift-box.svg";
 import imgDiamond from "../../../assets/images/diamond.svg";
 import imgClose from "../../../assets/images/close.svg";
 import imgSend from "../../../assets/images/send.svg";
+import imgPlus from "../../../assets/images/plus.svg";
 //xe
 
 import imgBus from "../../../assets/images/bus.svg";
@@ -215,11 +237,38 @@ let dataGift = [{
     }
     
 ]
+let dataDiamond=[
+    {
+        number:1,
+        price:9000
+    },
+    {
+        number:10,
+        price:99000
+    },
+    {
+        number:100,
+        price:990000
+    },
+    {
+        number:10000,
+        price:9900000
+    },
+    {
+        number:100000,
+        price:99000000
+    },
+    {
+        number:1000000,
+        price:990000000
+    }
+]
 export default {
     name:"messageschat",
     data:()=>{
         return{
             imgUser,
+            imgPlus,
             imgSend,
             imgSmile,
             imgSmiling,
@@ -243,6 +292,7 @@ export default {
             imgBicycle,
             imgMotorbike,
             imgPlane,
+            dataDiamond,
             commnetUser:{
                 name:"A2",
                 content:"",
@@ -254,12 +304,16 @@ export default {
             },
             isShowIcon:false,
             isShowSend:false,
+            isShowBuyGitf:false
         }
     },
     updated(){
          this.$refs.frameLength.scrollTop=  Number(this.$refs.frames[this.$refs.frames.length -1].offsetTop) + Number(this.$refs.frames[this.$refs.frames.length -1].offsetHeight)
     },
     methods:{
+        buyDiamond(){
+            this.isShowBuyGitf=!this.isShowBuyGitf
+        },
         focusInput(){
             this.isShowSend=!this.isShowSend
         },
