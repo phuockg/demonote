@@ -59,25 +59,25 @@
             </ul>
             <div class="messages-chat__container__content-message">
                 <div class="messages-chat__container__content-message__btn-point">
-                    <button @click="showIcon"><img :src="imgGift" alt=""></button>
+                    <button class="messages-chat__container__content-message__btn-point__btn" @click="showIcon"><img :src="imgGift" alt=""></button>
                 </div>
                 <div class="messages-chat__container__content-message__input">
-                    <input  @keyup.enter="sendCommnent" @keyup="enterText" type="text" :value="commnetUser.content">
+                    <input @blur="focusInput" @focus="focusInput"  @keydown.enter="sendCommnent" @keyup="enterText" type="text" :value="commnetUser.content">
                     <!-- <textarea v-on:keyup="enterText" type="text" :value="commnetUser.content" rows="4" cols="50">
                     </textarea> -->
                     <!-- <span class="messages-chat__container__content-message__input__span" v-on:keyup="enterText" contenteditable="true"> {{commnetUser.content}}</span> -->
-                    <div class="messages-chat__container__content-message__input__btn-send">
-                        <button @click="sendCommnent">send</button>
+                    <div @click="sendCommnent" :disabled="!isShowSend"  class="messages-chat__container__content-message__input__btn-send">
+                        <!-- <button @click="sendCommnent">send</button> -->
+                        <img   :src="imgSend" alt="">
                     </div>
                 </div>
             </div>
             <div  v-if="isShowIcon" class="messages-chat__container__icon">
                 <div  class="messages-chat__container__icon__wrap">
                     <div class="messages-chat__container__icon__wrap__btn-hide">
-                        <img @click="hideGift" :src="imgClose" alt="">
+                        <img  class="messages-chat__container__icon__wrap__btn-hide__img" @click="hideGift" :src="imgClose" alt="">
                     </div>
-                    <div class="messages-chat__container__icon__wrap__arrow-show">
-                        
+                    <div class="messages-chat__container__icon__wrap__arrow-show">   
                     </div>
                     <div class="messages-chat__container__icon__wrap__list">
                         <ul  class="messages-chat__container__icon__wrap__list__type">
@@ -124,6 +124,7 @@ import imgSmiling from "../../../assets/images/smiling.svg";
 import imgGift from "../../../assets/images/gift-box.svg";
 import imgDiamond from "../../../assets/images/diamond.svg";
 import imgClose from "../../../assets/images/close.svg";
+import imgSend from "../../../assets/images/send.svg";
 //xe
 
 import imgBus from "../../../assets/images/bus.svg";
@@ -219,6 +220,7 @@ export default {
     data:()=>{
         return{
             imgUser,
+            imgSend,
             imgSmile,
             imgSmiling,
             commnetUsers,
@@ -250,16 +252,16 @@ export default {
                 isShowGift:false,
                 price:"100"
             },
-            isShowIcon:false
+            isShowIcon:false,
+            isShowSend:false,
         }
     },
     updated(){
          this.$refs.frameLength.scrollTop=  Number(this.$refs.frames[this.$refs.frames.length -1].offsetTop) + Number(this.$refs.frames[this.$refs.frames.length -1].offsetHeight)
-        //  this.commnetUser={...this.commnetUser,content:"",isShowGift:false}
     },
     methods:{
-        sendText(){
-            console.log("object")
+        focusInput(){
+            this.isShowSend=!this.isShowSend
         },
 
         enterText(e){
@@ -273,11 +275,14 @@ export default {
              this.isShowIcon=false
         },
         sendCommnent(){
-            this.commnetUser={...this.commnetUser, isShowGift:false}
-            this.commnetUsers=[...this.commnetUsers,this.commnetUser]
-            this.commnetUser={...this.commnetUser,content:"",isShowGift:false}
-            this.isShowIcon=false
-            console.log("object")
+            if(this.commnetUser.content !== "" && this.commnetUser.content.trim()!==""){
+                this.commnetUser={...this.commnetUser, isShowGift:false}
+                this.commnetUsers=[...this.commnetUsers,this.commnetUser]
+                this.commnetUser={...this.commnetUser,content:"",isShowGift:false}
+                this.isShowIcon=false
+            }
+            
+          
         },
         showIcon(){
             this.isShowIcon=!this.isShowIcon
@@ -288,8 +293,6 @@ export default {
     }
 }
 </script>
-
-
 <style lang="scss" scoped>
 @import "~/assets/scss/components/home/messages-area.scss";
 </style>
