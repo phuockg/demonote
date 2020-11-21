@@ -77,6 +77,9 @@
                     <div class="messages-chat__container__icon__wrap__btn-hide">
                         <img  class="messages-chat__container__icon__wrap__btn-hide__img" @click="hideGift" :src="imgClose" alt="">
                     </div>
+                    <div v-if="isShowBuyGitf" @click="backGift" class="messages-chat__container__icon__wrap__btn-back">
+                        <img  class="messages-chat__container__icon__wrap__btn-back__img" :src="imgBack" alt="">
+                    </div>
                     <div class="messages-chat__container__icon__wrap__arrow-show">   
                     </div>
                     <div v-if="!isShowBuyGitf" class="messages-chat__container__icon__wrap__list">
@@ -113,7 +116,7 @@
                     <div v-if="isShowBuyGitf" class="messages-chat__container__icon__wrap__buy-diamond">
                         <h1>Buy Diamond</h1>
                         <ul class="messages-chat__container__icon__wrap__buy-diamond__list">
-                            <li v-for="(item,index) in dataDiamond" :key="index" class="messages-chat__container__icon__wrap__buy-diamond__list__item">
+                            <li v-for="(item,index) in dataDiamond" :key="index" @click="()=>buyDiamondItem(item)" class="messages-chat__container__icon__wrap__buy-diamond__list__item">
                                 <div class="messages-chat__container__icon__wrap__buy-diamond__list__item__number">
                                     <img :src="imgDiamond" alt="">
                                     <span>{{item.number}}</span>
@@ -127,7 +130,7 @@
                     <div class="messages-chat__container__icon__wrap__number-diamond">
                         <div class="messages-chat__container__icon__wrap__number-diamond__current" >
                             <img :src="imgDiamond" alt="">
-                            <span>0</span>
+                            <span>{{itemDiamond.diamond}}</span>
                             <img @click="buyDiamond" :src="imgPlus" alt="">
                         </div>
                     </div>
@@ -147,6 +150,8 @@ import imgDiamond from "../../../assets/images/diamond.svg";
 import imgClose from "../../../assets/images/close.svg";
 import imgSend from "../../../assets/images/send.svg";
 import imgPlus from "../../../assets/images/plus.svg";
+import imgBack from "../../../assets/images/back.svg";
+
 //xe
 
 import imgBus from "../../../assets/images/bus.svg";
@@ -154,22 +159,32 @@ import imgCar from "../../../assets/images/car.svg";
 import imgBicycle from "../../../assets/images/bicycle.svg";
 import imgMotorbike from "../../../assets/images/motorbike.svg";
 import imgPlane from "../../../assets/images/plane.svg";
+
 //nươc
+
 import imgCola from "../../../assets/images/cola.svg";
 import imgDrinkWater from "../../../assets/images/drink-water.svg";
+
 //hoa
+
 import imgFlowerPot from "../../../assets/images/flower-pot.svg";
 import imgRose from "../../../assets/images/rose.svg";
+
 //banh
+
 import imgBirthdayCake from "../../../assets/images/birthday-cake.svg";
 
 //trưng
+
 import imgEgg from "../../../assets/images/egg.svg";
 import imgEggs from "../../../assets/images/eggs.svg";
 import imgEasterEgg from "../../../assets/images/easter-egg.svg";
+
 //rong
+
 import imgDragon from "../../../assets/images/dragon.svg";
 import imgDragon2 from "../../../assets/images/dragon2.svg";
+
 let commnetUsers = [
     {
         name:"A1",
@@ -188,7 +203,8 @@ let commnetUsers = [
         isShowGift:false,
         price:"100"
     }
-    ]
+]
+//thanhthaok49@gmail.com
 let dataGift = [{
         img:imgFlowerPot,
         price:1,
@@ -237,6 +253,7 @@ let dataGift = [{
     }
     
 ]
+
 let dataDiamond=[
     {
         number:1,
@@ -263,6 +280,7 @@ let dataDiamond=[
         price:990000000
     }
 ]
+
 export default {
     name:"messageschat",
     data:()=>{
@@ -292,6 +310,7 @@ export default {
             imgBicycle,
             imgMotorbike,
             imgPlane,
+            imgBack,
             dataDiamond,
             commnetUser:{
                 name:"A2",
@@ -300,7 +319,12 @@ export default {
                 avatar:imgUser,
                 gift:imgSmiling,
                 isShowGift:false,
-                price:"100"
+                price:100
+            },
+            itemDiamond:{
+                nameUser:"A",
+                money:1000000000,
+                diamond:1000
             },
             isShowIcon:false,
             isShowSend:false,
@@ -312,21 +336,36 @@ export default {
     },
     methods:{
         buyDiamond(){
-            this.isShowBuyGitf=!this.isShowBuyGitf
+            this.isShowBuyGitf=true
+        },
+        buyDiamondItem(item){
+            if(this.itemDiamond.money > item.price){
+                this.itemDiamond={...this.itemDiamond,money:this.itemDiamond.money  - item.price,diamond:this.itemDiamond.diamond + item.number}
+            }
+            
         },
         focusInput(){
             this.isShowSend=!this.isShowSend
         },
-
+        backGift(){
+            this.isShowBuyGitf=false
+        },
         enterText(e){
             if(e.keyCode != "13")
             this.commnetUser={...this.commnetUser,content:e.target.value,isShowGift:false} 
             
         },
         addIcon(item){
-            this.commnetUser={...this.commnetUser, gift:item.img,price:item.price, isShowGift:true}
-             this.commnetUsers=[...this.commnetUsers,this.commnetUser]
-             this.isShowIcon=false
+            if(this.itemDiamond.diamond > item.price){
+                this.commnetUser={...this.commnetUser, gift:item.img,price:item.price, isShowGift:true}
+                this.itemDiamond = {...this.itemDiamond,diamond:this.itemDiamond.diamond - item.price}
+                this.commnetUsers=[...this.commnetUsers,this.commnetUser]
+
+                this.isShowIcon=false
+            }else{
+                this.isShowBuyGitf=true
+            }
+            
         },
         sendCommnent(){
             if(this.commnetUser.content !== "" && this.commnetUser.content.trim()!==""){
@@ -334,15 +373,14 @@ export default {
                 this.commnetUsers=[...this.commnetUsers,this.commnetUser]
                 this.commnetUser={...this.commnetUser,content:"",isShowGift:false}
                 this.isShowIcon=false
-            }
-            
-          
+            }   
         },
         showIcon(){
             this.isShowIcon=!this.isShowIcon
         },
         hideGift(){
             this.isShowIcon=false
+            this.isShowBuyGitf=false
         }
     }
 }
