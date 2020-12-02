@@ -142,6 +142,8 @@
 </template>
 
 <script>
+import socket from '~/plugins/socket.io.js'
+
 import imgUser from "../../../assets/images/user.svg";
 import imgSmile from "../../../assets/images/smile.svg";
 import imgSmiling from "../../../assets/images/smiling.svg";
@@ -282,7 +284,19 @@ let dataDiamond=[
 ]
 
 export default {
-    name:"messageschat",
+//     asyncData(context, callback) {
+//     socket.emit('last-messages', function (messages) {
+//       callback(null, {
+//         messages,
+//         message: ''
+//       })
+//     })
+//   },
+//     beforeMount() {
+//         socket.on('new-message', (message) => {
+//         this.messages.push("phuoc")
+//         })
+//     },
     data:()=>{
         return{
             imgUser,
@@ -331,8 +345,11 @@ export default {
             isShowBuyGitf:false
         }
     },
+    
+    
     updated(){
          this.$refs.frameLength.scrollTop=  Number(this.$refs.frames[this.$refs.frames.length -1].offsetTop) + Number(this.$refs.frames[this.$refs.frames.length -1].offsetHeight)
+         
     },
     methods:{
         buyDiamond(){
@@ -351,9 +368,10 @@ export default {
             this.isShowBuyGitf=false
         },
         enterText(e){
-            if(e.keyCode != "13")
-            this.commnetUser={...this.commnetUser,content:e.target.value,isShowGift:false} 
             
+            if(e.keyCode !== 13){
+                this.commnetUser={...this.commnetUser,content:e.target.value,isShowGift:false} 
+            } 
         },
         addIcon(item){
             if(this.itemDiamond.diamond > item.price){
@@ -370,6 +388,8 @@ export default {
         sendCommnent(){
             if(this.commnetUser.content !== "" && this.commnetUser.content.trim()!==""){
                 this.commnetUser={...this.commnetUser, isShowGift:false}
+                // socket.emit('send-message',this.commnetUser.content)
+                // console.log(this.messages)
                 this.commnetUsers=[...this.commnetUsers,this.commnetUser]
                 this.commnetUser={...this.commnetUser,content:"",isShowGift:false}
                 this.isShowIcon=false

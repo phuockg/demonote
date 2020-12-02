@@ -19,7 +19,9 @@ export default {
   
     // Global CSS (https://go.nuxtjs.dev/config-css)
     css: ["~/assets/main.scss"],
-  
+    env: {
+      WS_URL: 'http://127.0.0.1:3001'
+    },
     // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
     plugins: [
       "@/plugins/antd-ui",
