@@ -6,7 +6,7 @@
         <div class="chatArea">
           <ul class="messages" ref="messages">
             <li class="message" v-for="(message, index) in messages" :key="index">
-              <i :title="message.date">{{ message.date.split('T')[1].slice(0, -2) }}</i>: {{ message.text }}
+              <i :title="message.date">{{ message.date.split('T')[1].slice(0, -2) }}</i>: {{ message.contentChat }}
             </li>
           </ul>
         </div>
@@ -37,7 +37,8 @@ export default {
       if (!this.message.trim()) return
       let message = {
         date: new Date().toJSON(),
-        text: this.message.trim()
+        name:"AAA",
+        contentChat: this.message.trim()
       }
       this.messages.push(message)
       this.message = ''
